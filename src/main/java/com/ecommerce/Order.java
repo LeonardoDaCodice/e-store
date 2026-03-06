@@ -12,7 +12,7 @@ public class Order {
         this.orderId = orderId;
         this.products = products;
         this.totalPrice = calculateTotalPrice();
-        // FIXME: The constructor should set the initial status to PENDING
+        this.status = OrderStatus.PENDING;
     }
 
     /**
@@ -21,8 +21,13 @@ public class Order {
      * @return The total price of the order.
      */
     private double calculateTotalPrice() {
-        // FIXME: This method should return the total price, instead of returning zero
-        return 0;
+            double total = 0.0;
+
+        for (Product product : products) {
+            total += product.getPrice();
+        }
+
+        return total;
     }
 
     public int getOrderId() {
@@ -47,6 +52,6 @@ public class Order {
      * @param status The new status of the order.
      */
     public void setStatus(OrderStatus status) {
-        // TODO: implement this method
+        this.status = status;
     }
 }
