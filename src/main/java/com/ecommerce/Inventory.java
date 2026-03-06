@@ -21,15 +21,37 @@ public class Inventory {
      * @throws ProductNotFoundException if no product with the given id exists.
      */
     public void removeProduct(int productId) throws ProductNotFoundException {
-        // TODO: Implement this method
+         Product productToRemove = null;
+
+        for (Product product : products) {
+            if (product.getId() == productId) {
+                productToRemove = product;
+                break;
+            }
+        }
+
+        if (productToRemove == null) {
+            throw new ProductNotFoundException();
+        }
+
+        products.remove(productToRemove);
     }
 
     public Product findProductById(int productId) {
-        for (Product product : products) {
+       for (Product product : products) {
+
             if (product.getId() == productId) {
-                return product;
+
+                //restituisco una copia
+                return new Product(
+                        product.getId(),
+                        product.getName(),
+                        product.getPrice(),
+                        product.getStockQuantity()
+                );
             }
         }
+
         return null;
     }
 
@@ -40,7 +62,16 @@ public class Inventory {
      * @param quantity  The quantity to reduce the stock by.
      */
     public void reduceStock(int productId, int quantity) {
-        // TODO: Implement this method
+ 
+        for (Product product : products) {
+
+            if (product.getId() == productId) {
+
+                int newStock = product.getStockQuantity() - quantity;
+                product.setStockQuantity(newStock);
+                return;
+            }
+        }
     }
 
     /**
@@ -50,7 +81,14 @@ public class Inventory {
      * @return The current stock quantity.
      */
     public int getStock(int productId) {
-        // FIXME: This method should return the correct quantity
+        
+        for (Product product : products) {
+
+            if (product.getId() == productId) {
+                return product.getStockQuantity();
+            }
+        }
         return -1;
     }
+
 }
